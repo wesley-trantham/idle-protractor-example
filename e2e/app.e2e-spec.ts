@@ -10,5 +10,9 @@ describe('idle-protractor-example App', () => {
   it('should display message saying app works', () => {
     page.navigateTo();
     expect(page.getParagraphText()).toEqual('app works!');
+
+    page.clickToChangeText();
+
+    expect(page.getParagraphText()).toEqual('title changed!');
   });
 });

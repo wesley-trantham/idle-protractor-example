@@ -8,4 +8,8 @@ export class IdleProtractorExamplePage {
   getParagraphText() {
     return element(by.css('app-root h1')).getText();
   }
+
+  clickToChangeText() {
+    element(by.id('btnTest')).click();
+  }
 }
