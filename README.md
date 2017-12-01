@@ -1,5 +1,14 @@
 # IdleProtractorExample
 
+This example is intended to show how @ng-idle/core@2.0.0-beta.12
+prevents protractor from completing calls as it has waitForAngular() implicitly. 
+The setInterval in the idle service make it appear that angualar is constantly busy.
+Reference: https://github.com/angular/angular/issues/8089
+
+In terminal 1: npm install, npm run pree2e, npm start
+In terminal 2: npm run e2e
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
 
 ## Development server
