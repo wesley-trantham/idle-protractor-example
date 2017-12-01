@@ -5,8 +5,9 @@ prevents protractor from completing calls as it has waitForAngular() implicitly.
 The setInterval in the idle service make it appear that angualar is constantly busy.
 Reference: https://github.com/angular/angular/issues/8089
 
-In terminal 1: npm install, npm run pree2e, npm start
-In terminal 2: npm run e2e
+In terminal 1: npm install, npm run pree2e, npm run e2e
+
+You may comment out the line `idleService.watch()` in app.component to see the E2E test succeed.
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
