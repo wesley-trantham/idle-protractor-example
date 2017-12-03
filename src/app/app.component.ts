@@ -9,12 +9,12 @@ import { Component, NgZone } from '@angular/core';
 export class AppComponent {
   public title = 'app works!';
 
-  public idleTime: Date;
+  public expectedIdleTime: Date;
   private currentIdleIntervalFrequencyInSeconds = 5;
-  private currentTimeoutDuration = 10;
+  private currentTimeoutDurationInSeconds = 10;
   public mostRecentInterrupt: Date;
   public currentTime: Date;
-  public timeout: Date;
+  public expectedTimeout: Date;
   public actualIdle: Date;
   public actualTimeout: Date;
 
@@ -26,7 +26,7 @@ export class AppComponent {
 
     idleService.setInterrupts(DEFAULT_INTERRUPTSOURCES);
     idleService.setIdle(this.currentIdleIntervalFrequencyInSeconds);
-    idleService.setTimeout(this.currentTimeoutDuration);
+    idleService.setTimeout(this.currentTimeoutDurationInSeconds);
     idleService.onTimeout.subscribe(() => {
       this.title = 'timed out!';
       this.actualTimeout = new Date();
@@ -64,7 +64,7 @@ export class AppComponent {
   }
 
   private setNextWatchIntervals(now: Date) {
-    this.idleTime = new Date(now.getTime() + this.currentIdleIntervalFrequencyInSeconds * 1000);
-    this.timeout = new Date(this.idleTime.getTime() + this.currentTimeoutDuration * 1000);
+    this.expectedIdleTime = new Date(now.getTime() + this.currentIdleIntervalFrequencyInSeconds * 1000);
+    this.expectedTimeout = new Date(this.expectedIdleTime.getTime() + this.currentTimeoutDurationInSeconds * 1000);
   }
 }
