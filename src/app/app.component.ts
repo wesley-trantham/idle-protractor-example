@@ -10,8 +10,8 @@ export class AppComponent {
   public title = 'app works!';
 
   public expectedIdleTime: Date;
-  private currentIdleIntervalFrequencyInSeconds = 5;
-  private currentTimeoutDurationInSeconds = 10;
+  private currentIdleIntervalFrequencyInSeconds = 3;
+  private currentTimeoutDurationInSeconds = 5;
   public mostRecentInterrupt: Date;
   public currentTime: Date;
   public expectedTimeout: Date;
