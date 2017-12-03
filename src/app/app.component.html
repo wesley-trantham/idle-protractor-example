@@ -2,3 +2,27 @@
   {{title}}
 </h1>
 <button id="btnTest" (click)="changeTitle()">Change Title</button>
+
+<table>
+  <tr><th>Desc</th><th>Expected Time</th><th>Actual Time</th></tr>
+  <tr>
+    <td>Current Time</td>
+    <td>{{currentTime.toLocaleTimeString()}}</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Last Interrupt</td>
+    <td>{{mostRecentInterrupt.toLocaleTimeString()}}</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Idle at</td>
+    <td>{{idleTime.toLocaleTimeString()}}</td>
+    <td>{{actualIdle?.toLocaleTimeString()}}</td>
+  </tr>
+  <tr>
+    <td>Timeout at</td>
+    <td>{{timeout?.toLocaleTimeString()}}</td>
+    <td>{{actualTimeout?.toLocaleTimeString()}}</td>
+  </tr>
+</table>

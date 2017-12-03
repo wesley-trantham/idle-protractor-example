@@ -13,6 +13,6 @@ describe('idle-protractor-example App', () => {
 
     page.clickToChangeText();
 
-    expect(page.getParagraphText()).toEqual('title changed!');
+    expect(page.getParagraphText()).toEqual('Watch started!');
   });
 });

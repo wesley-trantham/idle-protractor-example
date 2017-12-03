@@ -1,5 +1,5 @@
-import { Idle } from '@ng-idle/core';
-import { Component } from '@angular/core';
+import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
+import { Component, NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,18 +7,64 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  public title = 'app works!';
 
-  constructor(idleService: Idle) {
-    idleService.setIdle(10);
-    idleService.setTimeout(10);
+  public idleTime: Date;
+  private currentIdleIntervalFrequencyInSeconds = 5;
+  private currentTimeoutDuration = 10;
+  public mostRecentInterrupt: Date;
+  public currentTime: Date;
+  public timeout: Date;
+  public actualIdle: Date;
+  public actualTimeout: Date;
+
+  constructor(private idleService: Idle, zone: NgZone) {
+    const now = new Date();
+    this.currentTime = now;
+    this.setNextWatchIntervals(now);
+    this.mostRecentInterrupt = now;
+
+    idleService.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+    idleService.setIdle(this.currentIdleIntervalFrequencyInSeconds);
+    idleService.setTimeout(this.currentTimeoutDuration);
     idleService.onTimeout.subscribe(() => {
-      this.title = 'timing out!';
+      this.title = 'timed out!';
+      this.actualTimeout = new Date();
     });
+    idleService.onTimeoutWarning.subscribe((x) => {
+      this.title = `warning - timeout in ${x}`;
+    });
+    idleService.onIdleStart.subscribe(() => {
+      this.actualIdle = new Date();
+    });
+    idleService.onInterrupt.subscribe(x => {
+      const interruptDate = new Date();
+      this.mostRecentInterrupt = interruptDate;
+      this.setNextWatchIntervals(interruptDate);
+    });
+    idleService.onIdleEnd.subscribe(() => {
+      this.title = `no longer idle`;
+    });
+
+    zone.runOutsideAngular(() => {
+      setInterval(() => {
+        zone.run(() => {
+          this.currentTime = new Date();
+        });
+      }, 200);
+    });
+
     idleService.watch();
   }
 
   public changeTitle() {
-    this.title = 'title changed!';
+    this.title = 'Watch started!';
+    this.idleService.watch();
+    this.setNextWatchIntervals(new Date());
+  }
+
+  private setNextWatchIntervals(now: Date) {
+    this.idleTime = new Date(now.getTime() + this.currentIdleIntervalFrequencyInSeconds * 1000);
+    this.timeout = new Date(this.idleTime.getTime() + this.currentTimeoutDuration * 1000);
   }
 }
