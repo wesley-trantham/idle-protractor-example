@@ -1,13 +1,13 @@
 # IdleProtractorExample
 
 This example is intended to show how @ng-idle/core@2.0.0-beta.12
-prevents protractor from completing calls as it has waitForAngular() implicitly. 
-The setInterval in the idle service make it appear that Angular is constantly busy.
+prevents protractor from completing calls as it waits for waitForAngular() implicitly. 
+The setInterval in the idle service makes it appear that Angular is constantly busy.
 Reference: https://github.com/angular/angular/issues/8089
 
 In terminal 1: npm install, npm run pree2e, npm run e2e
 
-You may comment out the line `idleService.watch()` in app.component to see the E2E test succeed.
+You may comment out the line `idleService.watch()` in app.component to see the E2E test succeed. You may also replace @ng-idle/core with https://github.com/wesley-trantham/ng2-idle/tree/bug/e2e-protractor-speed, which is my fix to both the hanging and how slow your E2E tests would run with only the zone fix.
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
